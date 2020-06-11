@@ -3,7 +3,7 @@ import { Alert } from 'react-native';
 
 import { signInSuccess, signFailure } from './actions';
 
-// import history from '~/services/history';
+import * as navigation from '~/services/navigation';
 import api from '~/services/api';
 
 export function* signIn({ payload }) {
@@ -20,7 +20,6 @@ export function* signIn({ payload }) {
     api.defaults.headers.Authorization = `Bearer ${token}`;
 
     yield put(signInSuccess(token, user));
-    // history.push('/dashboard');
   } catch (error) {
     Alert.alert('Error', 'Falha na autenticação, verifique seus dados');
     yield put(signFailure());
@@ -37,7 +36,7 @@ export function* signUp({ payload }) {
       password,
     });
 
-    // history.push('/');
+    navigation.navigate('SignIn');
   } catch (error) {
     Alert.alert('Error', 'Falha no cadastro, verifique seus dados');
     yield put(signFailure());

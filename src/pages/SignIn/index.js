@@ -1,6 +1,9 @@
 import React, { useState, useRef } from 'react';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Image } from 'react-native';
+
+import { signInRequest } from '~/store/modules/auth/actions';
 
 import Background from '~/components/Background';
 
@@ -16,12 +19,15 @@ import {
 } from './styles';
 
 const SignIn = ({ navigation }) => {
+  const dispatch = useDispatch();
   const passwordRef = useRef();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    dispatch(signInRequest(email, password));
+  };
 
   return (
     <Background>
@@ -38,7 +44,7 @@ const SignIn = ({ navigation }) => {
             returnKeyType="next"
             onSubmitEditing={() => passwordRef.current.focus()}
             value={email}
-            onChange={setEmail}
+            onChangeText={setEmail}
           />
           <FormInput
             icon="lock-outline"
@@ -48,10 +54,10 @@ const SignIn = ({ navigation }) => {
             returnKeyType="send"
             onSubmitEditing={handleSubmit}
             value={password}
-            onChange={setPassword}
+            onChangeText={setPassword}
           />
 
-          <SubmitButton>Entrar</SubmitButton>
+          <SubmitButton onPress={handleSubmit}>Entrar</SubmitButton>
         </Form>
         <SignLink onPress={() => navigation.navigate('SignUp')}>
           <SignLinkText>Criar conta grátis</SignLinkText>
