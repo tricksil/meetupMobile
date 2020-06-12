@@ -8,14 +8,12 @@ import '~/config/ReactotronConfig';
 import Routes from '~/routes';
 import { store, persistor } from './store';
 
-import * as NavigationServices from '~/services/navigation';
-
 const App = () => {
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <StatusBar barStyle="light-content" backgroundColor="#22202C" />
-        <Routes ref={(ref) => NavigationServices.setNavigator(ref)} />
+        <Routes />
       </PersistGate>
     </Provider>
   );

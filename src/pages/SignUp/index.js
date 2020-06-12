@@ -1,6 +1,9 @@
 import React, { useState, useRef } from 'react';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Image } from 'react-native';
+
+import { signUpRequest } from '~/store/modules/auth/actions';
 
 import Background from '~/components/Background';
 
@@ -16,6 +19,7 @@ import {
 } from './styles';
 
 const SignUp = ({ navigation }) => {
+  const dispatch = useDispatch();
   const emailRef = useRef();
   const passwordRef = useRef();
 
@@ -23,7 +27,9 @@ const SignUp = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    dispatch(signUpRequest(name, email, password));
+  };
 
   return (
     <Background>
@@ -39,7 +45,7 @@ const SignUp = ({ navigation }) => {
             returnKeyType="next"
             onSubmitEditing={() => emailRef.current.focus()}
             value={name}
-            onChange={setName}
+            onChangeText={setName}
           />
           <FormInput
             icon="mail-outline"
@@ -50,7 +56,7 @@ const SignUp = ({ navigation }) => {
             returnKeyType="next"
             onSubmitEditing={() => passwordRef.current.focus()}
             value={email}
-            onChange={setEmail}
+            onChangeText={setEmail}
           />
           <FormInput
             icon="lock-outline"
@@ -60,10 +66,10 @@ const SignUp = ({ navigation }) => {
             returnKeyType="send"
             onSubmitEditing={handleSubmit}
             value={password}
-            onChange={setPassword}
+            onChangeText={setPassword}
           />
 
-          <SubmitButton>Entrar</SubmitButton>
+          <SubmitButton onPress={handleSubmit}>Entrar</SubmitButton>
         </Form>
         <SignLink onPress={() => navigation.navigate('SignIn')}>
           <SignLinkText>Já tenho login</SignLinkText>
